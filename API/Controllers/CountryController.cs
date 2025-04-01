@@ -48,7 +48,7 @@ namespace Controllers
                 var success = await _service.CreateAsync(dto);
                 if (success)
                 {
-                    return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto.Name);
+                    return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
                 }
                 return BadRequest("No se pudo crear el país.");
             }
