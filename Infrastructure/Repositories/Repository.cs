@@ -41,6 +41,16 @@ namespace Infrastructure.Repositories
             _dbSet.Remove(entity);
         }
 
+        public async Task<bool> ExistsByNameAsync(string name)
+        {
+            var property = typeof(T).GetProperty("Name");
+            if (property != null && property.PropertyType == typeof(string))
+            {
+                return await _dbSet.AnyAsync(e => EF.Property<string>(e, "Name") == name);
+            }
+            throw new InvalidOperationException("La entidad no tiene una propiedad 'Name' de tipo string.");
+        }
+
         public async Task<bool> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync() > 0;
